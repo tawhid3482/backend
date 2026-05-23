@@ -9,14 +9,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Deploy via Bastion
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.BASTION_HOST }}   # bastion public IP
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd backend
-            git pull origin main
-            npm install
-            pm2 restart backend || pm2 start index.js --name backend
+            ssh -o StrictHostKeyChecking=no ubuntu@10.0.2.229 << 'EOF'
+              cd backend
+              git pull origin main
+              npm install
+              pm2 restart backend || pm2 start index.js --name backend
+            EOF

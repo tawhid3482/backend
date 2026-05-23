@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Backend with DB is running 🚀");
+  res.send("Backend with DB is running by Tawhidul Islam 🚀");
 });
 
 app.get("/users", (req, res) => {
